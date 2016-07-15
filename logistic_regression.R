@@ -2,8 +2,8 @@
 # the performance of the model.
 
 # Open training and validation data.
-train<-read.csv("train_v1.csv", na.strings = c(""))
-validate<-read.csv("validate_v1.csv", na.strings = c(""))
+train<-read.csv("train_simple.csv", na.strings = c(""))
+validate<-read.csv("validate_simple.csv", na.strings = c(""))
 
 # Convert age to numeric
 train$Age<-as.numeric(train$Age)

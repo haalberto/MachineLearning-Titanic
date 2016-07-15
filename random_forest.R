@@ -2,8 +2,8 @@
 # the performance of the model.
 
 # Open training and validation data.
-train<-read.csv("train_v1.csv", na.strings = c(""))
-validate<-read.csv("validate_v1.csv", na.strings = c(""))
+train<-read.csv("train_simple.csv", na.strings = c(""))
+validate<-read.csv("validate_simple.csv", na.strings = c(""))
 
 # Convert age to numeric
 train$Age<-as.numeric(train$Age)
@@ -61,24 +61,33 @@ ggplot(learning, aes(x=Training.set.size, y=Accuracy)) + geom_point(aes(color=Se
 # Here I try to find out what kind of passengers the algorithm fails to predict correcttly.
 
 # Find wrongly predicted passengers on the validation set.
-wrongpreds<-predictions_validation == validate$Survived
+wrongpreds<-predictions_validation != validate$Survived
 
-# plot Survival versus Age for this set
-ggplot(validate[wrongpreds, ], aes(x=Age, y=Survived)) +
-    geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0, h = 0.7))
+# plot Fare versus Age, distinguish Sex and Survival
+ggplot(validate[wrongpreds, ], aes(x=Age, y=Fare)) +
+    geom_point(aes(color=Survived, shape=as.factor(Sex)), size=2.5 )
 
-# plot Survival versus Sex for this set
-ggplot(validate[wrongpreds, ], aes(x=Sex, y=Survived)) +
-    geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0, h = 0.7))
+# plot Fare versus Age, distinguish Sex and Survivival (whole validation set)
+ggplot(validate, aes(x=Age, y=Fare)) +
+    geom_point(aes(color=Survived, shape=as.factor(Sex)), size=2.5)
 
-# plot Survival versus Pclass for this set
-ggplot(validate[wrongpreds, ], aes(x=Pclass, y=Survived)) +
-    geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0, h = 0.7))
+# # plot Survival versus Age for this set
+# ggplot(validate[wrongpreds, ], aes(x=Age, y=Survived)) +
+#     geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0, h = 0.7))
+# 
+# # plot Survival versus Sex for this set
+# ggplot(validate[wrongpreds, ], aes(x=Sex, y=Survived)) +
+#     geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0, h = 0.7))
+# 
+# # plot Survival versus Pclass for this set
+# ggplot(validate[wrongpreds, ], aes(x=Pclass, y=Survived)) +
+#     geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0, h = 0.7))
+# 
+# # plot Sex versus Pclass
+# ggplot(validate[wrongpreds, ], aes(x=Pclass, y=Sex)) +
+#     geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0.3, h = 0.7))
+# 
+# # plot Sex versus Embarked
+# ggplot(validate[wrongpreds, ], aes(x=Embarked, y=Sex)) +
+#     geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0.3, h = 0.7))
 
-# plot Sex versus Pclass
-ggplot(validate[wrongpreds, ], aes(x=Pclass, y=Sex)) +
-    geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0.3, h = 0.7))
-
-# plot Sex versus Embarked
-ggplot(validate[wrongpreds, ], aes(x=Embarked, y=Sex)) +
-    geom_point(aes(color=Survived, shape=as.factor(Survived)), size=2.5, position = position_jitter(w = 0.3, h = 0.7))
