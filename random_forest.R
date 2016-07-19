@@ -1,5 +1,4 @@
-# This script performs logistic regression on the training set and uses the validation set to evaluate
-# the performance of the model.
+# This script performs a random forest algorithm on the training data.
 
 # Open training and validation data.
 train<-read.csv("train_simple.csv", na.strings = c(""))
